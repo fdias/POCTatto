@@ -1,0 +1,1094 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d0b16">
+<meta name="description" content="Faça seu orçamento de tatuagem online: escolha o local no corpo em 3D, envie sua referência e veja a arte no tamanho real.">
+<meta property="og:title" content="Fernando Dias Tatuagem · orçamento online">
+<meta property="og:description" content="Escolha o local no corpo, envie a referência e receba o orçamento pelo WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://fdias.github.io/POCTatto/docs/telas/01-inicio.png">
+<meta property="og:url" content="https://fdias.github.io/POCTatto/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Crect x=%222%22 y=%222%22 width=%2236%22 height=%2236%22 rx=%229%22 fill=%22%23201c3a%22 stroke=%22%234fd8ff%22 stroke-width=%221.5%22/%3E%3Cpath d=%22M12 28 L20 10 L28 28 Z%22 fill=%22none%22 stroke=%22%23ffc94a%22 stroke-width=%222.4%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E">
+<style>html,body{margin:0}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}</style>
+</head>
+<body>
+<title>Fernando Dias Tatuagem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ultra&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Mundo: papel de estêncil térmico do estúdio. Folha branca, carbono violeta hectográfico (cor dominante do palco),
+   amarelo do papel de seda do verso, tinta preta. Palco violeta com régua em cm à esquerda; painel em folha branca.
+   Cena: cliente no celular, abrindo o link da bio do Instagram de dia ou no balcão do estúdio: por isso claro. */
+:root{
+  --paper:#f3f2f7;      /* mesa / fundo da página */
+  --sheet:#ffffff;      /* folha do painel */
+  --ink:#17131f;        /* tinta */
+  --ink-2:#4f4a63;      /* texto secundário (7:1 sobre branco) */
+  --rule:#dcd9e6;       /* fios e bordas */
+  --violet:#4228c4;     /* carbono hectográfico */
+  --violet-2:#341e9e;   /* carbono mais fundo */
+  --violet-soft:#ebe7fb;
+  --tissue:#f2cd3a;     /* papel de seda amarelo: XP e seleção */
+  --tissue-soft:#fdf4cc;
+  --red:#b8222f;
+  --wa:#128c4b;
+  --f-display:"Ultra", "Rockwell Extra Bold", Georgia, serif;
+  --f-body:"Hanken Grotesk", "Segoe UI", system-ui, sans-serif;
+  --f-num:"JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{
+  background:var(--paper); color:var(--ink); font-family:var(--f-body); font-size:15.5px; line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px));
+  -webkit-font-smoothing:antialiased; caret-color:var(--violet);
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
+::selection{background:var(--tissue);color:var(--ink)}
+*{box-sizing:border-box;scrollbar-color:var(--rule) transparent}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+a{text-underline-offset:3px}
+.ic{width:18px;height:18px;flex:none;display:block}
+
+.app{max-width:1280px;margin:0 auto;padding-block:16px 28px;display:flex;flex-direction:column;gap:16px;min-height:100%}
+
+/* ---------- topo ---------- */
+.hud{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px}
+.logo{display:flex;align-items:center;gap:10px;min-width:0}
+.logo svg{width:32px;height:32px;flex:none}
+.logo b{font-family:var(--f-display);font-weight:400;font-size:19px;line-height:1;letter-spacing:-.005em}
+.logo small{display:block;font-size:12px;color:var(--ink-2);margin-top:3px}
+.phases{display:flex;gap:2px;overflow-x:auto;flex:1 1 380px;min-width:0;scrollbar-width:none}
+.phases::-webkit-scrollbar{display:none}
+.ph{flex:none;display:flex;align-items:center;gap:6px;border:0;background:transparent;padding:8px 9px;font-size:13px;font-weight:500;color:var(--ink-2);white-space:nowrap;border-bottom:2px solid transparent}
+.ph i{font-style:normal;font-family:var(--f-num);font-size:11px;color:var(--ink-2)}
+.ph.done{color:var(--violet)} .ph.done i{color:var(--violet)}
+.ph.now{color:var(--ink);font-weight:700;border-bottom-color:var(--ink)} .ph.now i{color:var(--ink)}
+.ph:disabled{cursor:default;color:#9a96ab}
+.ph:not(:disabled):hover{color:var(--ink)}
+.xp{display:flex;align-items:center;gap:12px;margin-left:auto}
+.xp .lvl{text-align:right;line-height:1.25;white-space:nowrap}
+.xp .lvl b{display:block;font-size:14px}
+.xp .lvl span{font-family:var(--f-num);font-size:11.5px;color:var(--ink-2)}
+.bar{width:120px;height:8px;border-radius:4px;background:var(--rule);overflow:hidden;position:relative}
+.bar span{position:absolute;inset:0 auto 0 0;width:0;background:var(--tissue);border-right:2px solid var(--ink);transition:width .7s cubic-bezier(.16,1,.3,1)}
+.icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--rule);background:var(--sheet);display:grid;place-items:center;color:var(--ink-2)}
+.icon-btn:hover{color:var(--ink);border-color:var(--ink-2)}
+
+/* ---------- jogo ---------- */
+.game{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:16px;align-items:start}
+.stage{
+  position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);
+  height:calc(100vh - 104px);min-height:520px;max-height:900px;
+  border-radius:16px;overflow:hidden;background:var(--violet);color:#fff;
+}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+#gl:active{cursor:grabbing}
+.stage{background:radial-gradient(120% 80% at 50% 18%,#5136d8 0%,var(--violet) 46%,var(--violet-2) 100%)}
+.gl-fail{position:absolute;inset:auto 24px 50% 24px;text-align:center;color:#fff;font-weight:600}
+.opt img.fig{width:100%;max-width:112px;height:auto;aspect-ratio:240/520;object-fit:contain;display:block}
+.pick4 .opt img.fig{max-width:62px}
+.stage-top{position:absolute;top:14px;left:16px;right:14px;display:flex;justify-content:space-between;align-items:center;gap:8px;pointer-events:none;z-index:2}
+.stage-top > *{pointer-events:auto}
+.tag{font-size:12.5px;font-weight:600;color:#fff;letter-spacing:.01em}
+.tag .tag-d{font-weight:400;color:#d9d2ff}
+.seg{display:inline-flex;border-radius:10px;overflow:hidden;background:var(--violet-2);padding:3px;gap:2px}
+.seg button{border:0;background:transparent;padding:6px 12px;font-size:13px;font-weight:600;color:#d9d2ff;border-radius:7px}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--ink)}
+.stage-foot{position:absolute;left:12px;right:12px;bottom:14px;display:flex;justify-content:center;pointer-events:none;z-index:2}
+.readout{font-size:13px;color:var(--ink);background:#fff;border-radius:999px;padding:7px 14px;text-align:center;max-width:100%;box-shadow:0 4px 12px -4px rgba(0,0,0,.3)}
+.readout em{font-style:normal;font-weight:700}
+
+.panel{background:var(--sheet);border:1px solid var(--rule);border-radius:16px;display:flex;flex-direction:column;min-height:520px}
+.panel-body{padding:26px 24px 10px;flex:1;min-width:0}
+.panel-nav{position:sticky;bottom:0;display:flex;justify-content:space-between;gap:10px;padding:14px 24px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--rule);background:var(--sheet);border-radius:0 0 16px 16px;z-index:3}
+.step{display:flex;flex-direction:column;gap:18px}
+h1,h2,h3{margin:0;text-wrap:balance}
+.h-display{font-family:var(--f-display);font-weight:400;font-size:clamp(34px,4.4vw,46px);line-height:1.02;letter-spacing:-.01em}
+.h-display span{color:var(--violet)}
+h2{font-family:var(--f-display);font-weight:400;font-size:26px;line-height:1.08;letter-spacing:-.005em;margin-top:4px}
+h3{font-size:15px;font-weight:700}
+.lead{margin:0;color:var(--ink-2);max-width:62ch;margin-top:-6px}
+.fine{margin:0;font-size:13px;color:var(--ink-2)}
+p,.lead,.fine,.note{text-wrap:pretty}
+.route{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 20px;counter-reset:r}
+.route li{display:flex;gap:10px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--rule);font-size:14px;min-width:0}
+.route li b{font-family:var(--f-num);font-weight:500;font-size:12px;color:var(--violet);flex:none}
+.studio{font-size:13.5px;color:var(--ink-2);margin:0}
+.studio strong{color:var(--ink)}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--ink);background:var(--sheet);color:var(--ink);padding:11px 18px;font-weight:600;font-size:14.5px;border-radius:10px;text-decoration:none;transition:background .15s, color .15s, transform .1s}
+.btn:hover{background:var(--violet-soft)}
+.btn:active{transform:translateY(1px)}
+.btn-gold{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn-gold:hover{background:var(--violet)}
+.btn-big{padding:15px 26px;font-size:16px}
+.btn-ghost{border-color:var(--rule)}
+.btn-wa{background:var(--wa);border-color:var(--wa);color:#fff}
+.btn-wa:hover{background:#0f7a41}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn svg{width:18px;height:18px;flex:none}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+
+/* opções */
+.pick2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.pick4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.opt{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;border:1px solid var(--rule);background:var(--sheet);border-radius:12px;padding:12px 8px 10px;position:relative;transition:border-color .15s, background .15s}
+.opt:hover{border-color:var(--ink-2)}
+.opt[aria-pressed="true"]{border-color:var(--ink);background:var(--tissue-soft);box-shadow:inset 0 0 0 1px var(--ink)}
+.opt .tick{position:absolute;top:8px;right:8px;width:20px;height:20px;border-radius:50%;background:var(--ink);color:#fff;display:none;place-items:center}
+.opt .tick svg{width:12px;height:12px}
+.opt[aria-pressed="true"] .tick{display:grid}
+.opt svg.fig{width:100%;max-width:120px;height:auto;aspect-ratio:210/600}
+.pick4 .opt svg.fig{max-width:58px}
+.opt b{font-size:14px} .opt span{font-size:12.5px;color:var(--ink-2)}
+.skins{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.skin{aspect-ratio:1;border-radius:10px;border:1px solid rgba(0,0,0,.12);position:relative;padding:0;display:flex;align-items:flex-end;justify-content:center}
+.skin span{font-family:var(--f-num);font-size:11px;background:#fff;color:var(--ink);border-radius:4px;padding:0 5px;margin-bottom:5px}
+.skin[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:2px}
+.field{display:flex;flex-direction:column;gap:9px}
+.field > label, .qlabel{font-weight:700;font-size:14.5px;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.field > label output, .qlabel small{font-family:var(--f-num);font-size:12.5px;color:var(--ink-2);font-weight:400}
+input[type=range]{width:100%;accent-color:var(--violet)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1px solid var(--rule);background:var(--sheet);border-radius:999px;padding:7px 13px;font-size:13.5px;font-weight:500;color:var(--ink);transition:border-color .15s, background .15s}
+.chip:hover{border-color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip.sm{padding:5px 11px;font-size:12.5px}
+.selected-list{display:flex;flex-direction:column}
+.sel-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.sel-item:first-child{border-top:1px solid var(--rule)}
+.sel-item .num{width:26px;height:26px;border-radius:50%;background:var(--tissue);color:var(--ink);display:grid;place-items:center;font-family:var(--f-num);font-weight:700;font-size:12px;flex:none;box-shadow:inset 0 0 0 1.5px var(--ink)}
+.sel-item .txt{flex:1;min-width:0}
+.sel-item .txt small{display:block;color:var(--ink-2);font-size:12.5px}
+.sel-item button{border:0;background:transparent;color:var(--ink-2);width:32px;height:32px;border-radius:8px;display:grid;place-items:center}
+.sel-item button:hover{background:#fbe9eb;color:var(--red)}
+.empty{border:1px dashed var(--rule);border-radius:12px;padding:16px;color:var(--ink-2);font-size:13.5px;text-align:center}
+details.zl summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--violet);list-style:none;text-decoration:underline;text-underline-offset:3px}
+details.zl summary::-webkit-details-marker{display:none}
+details.zl[open] summary{margin-bottom:8px}
+.zl h4{margin:12px 0 6px;font-size:12.5px;font-weight:700;color:var(--ink-2)}
+.slots{display:flex;gap:6px;flex-wrap:wrap}
+.slot{display:flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--sheet);border-radius:999px;padding:5px 12px 5px 5px;font-size:13px;font-weight:600}
+.slot i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--paper);display:grid;place-items:center;font-family:var(--f-num);font-size:11px}
+.slot i svg{width:12px;height:12px}
+.slot.ok i{background:var(--violet);color:#fff}
+.slot[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.forge{position:relative;aspect-ratio:1/1;max-height:340px;width:100%;border-radius:12px;overflow:hidden;background:#f7f6fb;border:1px solid var(--rule)}
+.forge canvas{position:absolute;inset:0;width:100%;height:100%}
+.drop{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:20px;background:var(--sheet);border:1.5px dashed #b7b2ca;border-radius:12px;color:var(--ink-2);font-size:14px;cursor:pointer}
+.drop.over{border-color:var(--violet);background:var(--violet-soft);color:var(--ink)}
+.drop svg{width:40px;height:40px;color:var(--violet)}
+.drop b{color:var(--ink);font-size:15.5px}
+.forge-label{position:absolute;left:10px;top:10px;font-size:12px;font-weight:700;background:var(--ink);color:#fff;padding:3px 9px;border-radius:999px;z-index:2}
+.seg.full{display:flex;width:100%;background:var(--paper);padding:3px}
+.seg.full button{flex:1;padding:9px 6px;font-size:13px;color:var(--ink-2)}
+.seg.full button[aria-pressed="true"]{background:var(--ink);color:#fff}
+#quests{gap:0}
+.quest{padding:16px 0;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:10px}
+.quest:first-child{border-top:1px solid var(--rule)}
+.quest .qlabel .st{font-family:var(--f-num);font-size:11.5px;color:var(--ink-2);font-weight:500;white-space:nowrap;display:inline-flex;align-items:center;gap:4px}
+.quest .qlabel .st svg{width:12px;height:12px}
+.quest.ok .qlabel .st{color:var(--violet)}
+.quest .qlabel small{font-family:var(--f-body);font-weight:500;margin-left:6px}
+.quest p{margin:0;font-size:13px;color:var(--ink-2)}
+.txt-in{width:100%;background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:10px 12px;color:var(--ink)}
+.txt-in::placeholder{color:#686379}
+.txt-in:focus{border-color:var(--violet);outline:none;box-shadow:0 0 0 3px var(--violet-soft)}
+textarea.txt-in{min-height:72px;resize:vertical}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.check input{width:18px;height:18px;accent-color:var(--violet);margin-top:2px}
+.days{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:thin}
+.day{flex:none;width:54px;border:1px solid var(--rule);border-radius:12px;background:var(--sheet);padding:7px 0 6px;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:11.5px;color:var(--ink-2);text-transform:capitalize;transition:background .15s,border-color .15s,transform .15s}
+.day b{font-size:18px;line-height:1.1;color:var(--ink);font-family:var(--f-num);font-weight:700}
+.day:hover{border-color:var(--ink-2);transform:translateY(-1px)}
+.day[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#d9d2ff}
+.day[aria-pressed="true"] b{color:#fff}
+.gl-load{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:12px;color:#fff;font-weight:600;font-size:14px;z-index:1;pointer-events:none;transition:opacity .4s}
+.gl-load i{width:34px;height:34px;border-radius:50%;border:3px solid rgba(255,255,255,.25);border-top-color:#fff;animation:spin .9s linear infinite}
+.gl-load.done{opacity:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.qcount{display:flex;align-items:center;gap:12px;font-family:var(--f-num);font-size:12px;color:var(--ink-2)}
+.qcount .bar{width:auto;flex:1}
+
+/* ficha */
+.ficha-img{width:100%;border-radius:12px;border:1px solid var(--rule);display:block;background:var(--paper);aspect-ratio:1080/1350;object-fit:contain}
+.estimate{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;padding:14px 16px;background:var(--tissue-soft);border-radius:12px;border:1px solid #ecd987}
+.estimate .price{font-family:var(--f-display);font-size:24px;line-height:1.1;flex-basis:100%;font-variant-numeric:tabular-nums}
+.estimate span{font-family:var(--f-num);font-size:12.5px;color:var(--ink-2)}
+.wa-phone{background:#efeae2;border-radius:14px;padding:12px;border:1px solid var(--rule);display:flex;flex-direction:column;gap:6px}
+.wa-head{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);padding-bottom:8px;border-bottom:1px solid #d9d2c5}
+.wa-head i{width:28px;height:28px;border-radius:50%;background:var(--wa);display:grid;place-items:center;font-style:normal;color:#fff;font-weight:700;font-size:12px}
+.wa-head small{display:block;color:#667781;font-size:11px}
+.bubble{align-self:flex-end;max-width:92%;background:#d9fdd3;color:#111b21;border-radius:10px 2px 10px 10px;padding:8px 10px;font-size:13px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 1px 1px rgba(0,0,0,.12)}
+.bubble.img{padding:4px}
+.bubble.img img{display:block;width:150px;border-radius:7px}
+.bubble time{display:block;text-align:right;font-size:11px;color:#667781;margin-top:2px}
+.note{font-size:13px;color:var(--ink-2);margin:0;padding:12px 14px;background:var(--paper);border-radius:10px}
+
+/* avisos */
+.toasts{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);left:max(16px, env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:8px;z-index:50;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast{display:flex;gap:11px;align-items:center;background:var(--sheet);border:1px solid var(--ink);border-radius:12px;padding:10px 16px 10px 10px;box-shadow:0 10px 24px -12px rgba(0,0,0,.35);animation:tin .45s cubic-bezier(.16,1,.3,1)}
+.toast .medal{width:34px;height:34px;flex:none;border-radius:9px;background:var(--tissue);color:var(--ink);display:grid;place-items:center}
+.toast .medal svg{width:18px;height:18px}
+.toast small{display:block;font-family:var(--f-num);font-size:11px;color:var(--ink-2)}
+.toast b{font-size:14.5px}
+.toast.info .medal{background:var(--violet-soft);color:var(--violet)}
+.toast.warn{border-color:var(--red)} .toast.warn .medal{background:#fbe9eb;color:var(--red)}
+.toast.out{animation:tout .3s forwards}
+@keyframes tin{from{transform:translateY(14px);opacity:.2}to{transform:none;opacity:1}}
+@keyframes tout{to{transform:translateY(8px);opacity:0}}
+.float-xp{position:fixed;font-family:var(--f-num);font-weight:700;color:var(--violet);font-size:13px;pointer-events:none;z-index:60;animation:fx .9s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes fx{from{transform:translateY(0);opacity:1}to{transform:translateY(-26px);opacity:0}}
+.shake{animation:shk .35s}
+@keyframes shk{20%,60%{transform:translateX(-4px)}40%,80%{transform:translateX(4px)}}
+
+/* avatar */
+.zone{fill:transparent;cursor:pointer;transition:fill .15s}
+.zones-on .zone:hover{fill:rgba(255,255,255,.32)}
+.zone.sel{fill:rgba(242,205,58,.62);stroke:#17131f;stroke-width:1.1}
+.zones-off .zone{pointer-events:none}
+.zones-off .zone.sel{fill:transparent;stroke:none}
+.badge circle{fill:#f2cd3a;stroke:#17131f;stroke-width:1.4}
+.badge text{font-family:var(--f-num);font-weight:700;font-size:9px;fill:#17131f;text-anchor:middle;dominant-baseline:central}
+.handle rect{fill:none;stroke:#fff;stroke-width:1.2;stroke-dasharray:4 3}
+.handle circle{fill:#fff;stroke:#17131f;stroke-width:.8}
+.ruler text{font-family:var(--f-num);fill:#d9d2ff}
+
+dialog.cfg{border:1px solid var(--rule);background:var(--sheet);color:var(--ink);border-radius:16px;padding:0;width:min(460px,calc(100vw - 32px))}
+dialog.cfg::backdrop{background:rgba(23,19,31,.5)}
+.cfg form{padding:22px;display:flex;flex-direction:column;gap:12px}
+.cfg .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cfg label{font-size:13px;color:var(--ink-2);display:flex;flex-direction:column;gap:5px}
+
+@media (max-width:860px){
+  .game{grid-template-columns:minmax(0,1fr)}
+  .stage{height:46vh;min-height:300px;top:env(safe-area-inset-top,0px);z-index:5;border-radius:14px}
+  .panel{min-height:0}
+  .panel-body{padding:20px 16px 8px}
+  .panel-nav{padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+  .xp{margin-left:0}
+  .phases{order:3;flex-basis:100%}
+  .tag .tag-d{display:none}
+  .tag{visibility:hidden}
+  .ruler text{display:none}
+  .toasts{bottom:calc(env(safe-area-inset-bottom,0px) + 84px)}
+}
+@media (max-width:420px){
+  .route{grid-template-columns:minmax(0,1fr)}
+  .pick4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .skins{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .bar{width:80px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+
+<div class="app">
+  <header class="hud">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="1" y="1" width="38" height="38" rx="10" fill="#4228c4"/><path d="M11 10h10M11 10v20M11 19h8" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M23.5 10v20h2.5a7.5 10 0 0 0 0-20z" fill="none" stroke="#f2cd3a" stroke-width="2.6" stroke-linejoin="round"/></svg>
+      <div><b id="brandName">Fernando Dias</b><small id="studioLine">Tatuagem · orçamento online</small></div>
+    </div>
+    <nav class="phases" id="phases" aria-label="Fases"></nav>
+    <div class="xp" aria-live="polite">
+      <div class="lvl"><b id="lvlName">Seu orçamento</b><span id="lvlNum">0% completo</span></div>
+      <div class="bar" role="progressbar" aria-label="Progresso do orçamento" aria-valuemin="0" aria-valuemax="100" id="xpBar"><span id="xpFill"></span></div>
+      <button class="icon-btn" id="cfgBtn" type="button" aria-label="Configurar estúdio" title="Configurar estúdio (para o tatuador)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="game">
+    <section class="stage" id="stage" aria-label="Seu corpo em 3D">
+      <canvas id="gl" aria-label="Corpo em 3D. Arraste para girar."></canvas>
+      <div class="gl-load" id="glLoad"><i></i>Carregando o corpo em 3D…</div>
+      <p class="gl-fail" id="glFail" hidden>Este navegador não abriu o 3D. Atualize o navegador ou tente no celular.</p>
+      <div class="stage-top">
+        <span class="tag" id="stageTag"><span class="tag-v">Frente</span><span class="tag-d"> · escolha o corpo</span></span>
+        <div class="seg" id="viewSeg" role="group" aria-label="Lado do corpo">
+          <button type="button" data-view="front" aria-pressed="true">Frente</button>
+          <button type="button" data-view="back" aria-pressed="false">Costas</button>
+        </div>
+      </div>
+      <div class="stage-foot"><div class="readout" id="readout">Aperte <em>Começar missão</em></div></div>
+    </section>
+
+    <section class="panel" aria-live="polite">
+      <div class="panel-body">
+
+        <!-- 0 · início -->
+        <div class="step" data-step="0">
+          <h1 class="h-display">Vamos montar seu <span>orçamento</span></h1>
+          <p class="lead">Bem-vindo ao <strong id="studioName2">Fernando Dias Tatuagem</strong>. Em poucos passos você mostra onde quer a tatuagem, envia sua referência e vê a arte no corpo, no tamanho real. No fim, o orçamento chega pronto no WhatsApp do estúdio.</p>
+          <ol class="route">
+            <li><b>1</b>Corpo</li>
+            <li><b>2</b>Biotipo e altura</li>
+            <li><b>3</b>Local da tatuagem</li>
+            <li><b>4</b>Sua referência</li>
+            <li><b>5</b>Tamanho na pele</li>
+            <li><b>6</b>Detalhes da tatuagem</li>
+          </ol>
+          <div class="row"><button class="btn btn-gold btn-big" id="startBtn" type="button">Iniciar orçamento</button></div>
+          <p class="fine">Leva uns 3 minutos. Nada é enviado até você tocar em “Enviar pelo WhatsApp”.</p>
+          <p class="studio">Atendimento: <strong id="studioName">Fernando Dias Tatuagem</strong> · <span id="artistName">Fernando</span></p>
+        </div>
+
+        <!-- 1 · corpo -->
+        <div class="step" data-step="1" hidden>
+          <h2>Para quem é a tatuagem?</h2>
+          <p class="lead">Escolha o corpo. Ele serve de referência para o tatuador ver o tamanho e a posição da arte.</p>
+          <div class="pick2" id="corpoPick"></div>
+        </div>
+
+        <!-- 2 · fenótipo -->
+        <div class="step" data-step="2" hidden>
+          <h2>Ajuste o corpo ao seu</h2>
+          <div class="field">
+            <span class="qlabel">Biotipo</span>
+            <div class="pick4" id="buildPick"></div>
+          </div>
+          <div class="field">
+            <span class="qlabel">Tom de pele <small>escala Fitzpatrick</small></span>
+            <div class="skins" id="skinPick"></div>
+            <p class="fine">Ajuda o tatuador a planejar contraste, cores e cicatrização.</p>
+          </div>
+          <div class="field">
+            <label for="altura">Altura <output id="alturaOut">170 cm</output></label>
+            <input type="range" id="altura" min="145" max="200" step="1" value="170">
+            <p class="fine">Usada para converter o tamanho da arte em centímetros reais.</p>
+          </div>
+        </div>
+
+        <!-- 3 · local -->
+        <div class="step" data-step="3" hidden>
+          <h2>Onde vai a tatuagem?</h2>
+          <p class="lead">Toque no corpo para marcar. Você pode escolher até <strong>3 locais</strong>. Gire o corpo arrastando ou use Frente/Costas.</p>
+          <div class="selected-list" id="selList"></div>
+          <details class="zl" id="zoneList">
+            <summary>Prefere escolher por lista? Ver todos os locais</summary>
+            <div id="zoneListBody"></div>
+          </details>
+        </div>
+
+        <!-- 4 · arte -->
+        <div class="step" data-step="4" hidden>
+          <h2>Envie sua referência</h2>
+          <p class="lead">A imagem vira um estêncil, como o papel térmico que o tatuador usa para transferir o desenho para a pele.</p>
+          <div class="slots" id="artSlots"></div>
+          <div class="forge" id="forgeBox">
+            <span class="forge-label" id="forgeLabel" hidden>Estêncil</span>
+            <canvas id="forge" aria-label="Prévia da arte"></canvas>
+            <label class="drop" id="drop" for="file">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+              <b>Toque para escolher uma imagem</b>
+              <span>ou arraste e solte aqui. Foto, print do Pinterest, desenho no papel.</span>
+            </label>
+            <input type="file" id="file" accept="image/*" hidden>
+          </div>
+          <div class="row" id="artBtns">
+            <button class="btn" type="button" id="pickBtn">Enviar imagem</button>
+            <button class="btn btn-ghost" type="button" id="sampleBtn">Usar exemplo (dado d20)</button>
+            <button class="btn btn-ghost" type="button" id="copyArtBtn" hidden>Usar a mesma arte</button>
+          </div>
+          <div class="field" id="modeField" hidden>
+            <span class="qlabel">Como mostrar no corpo</span>
+            <div class="seg full" id="modeSeg" role="group" aria-label="Modo da arte">
+              <button type="button" data-mode="lines" aria-pressed="false">Só traço</button>
+              <button type="button" data-mode="shade" aria-pressed="true">Traço e sombra</button>
+              <button type="button" data-mode="color" aria-pressed="false">Original</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 · encaixe -->
+        <div class="step" data-step="5" hidden>
+          <h2>Encaixe a arte no corpo</h2>
+          <p class="lead">Arraste a arte sobre a pele e ajuste a largura e a rotação.</p>
+          <div class="slots" id="fitSlots"></div>
+          <div class="field">
+            <label for="sz">Largura <output id="szOut">10 cm</output></label>
+            <input type="range" id="sz" min="2" max="45" step="0.5" value="10">
+          </div>
+          <div class="field">
+            <label for="rt">Rotação <output id="rtOut">0°</output></label>
+            <input type="range" id="rt" min="-180" max="180" step="1" value="0">
+          </div>
+          <div class="row">
+            <button class="btn" type="button" id="flipBtn">Espelhar</button>
+            <button class="btn btn-ghost" type="button" id="centerBtn">Centralizar</button>
+          </div>
+        </div>
+
+        <!-- 6 · perguntas -->
+        <div class="step" data-step="6" hidden>
+          <h2>Últimos detalhes</h2>
+          <p class="lead">O que o tatuador precisa saber para passar o valor. Leva menos de um minuto.</p>
+          <div class="qcount"><span id="qDone">0/9</span><div class="bar"><span id="qFill"></span></div></div>
+          <div id="quests" class="step"></div>
+        </div>
+
+        <!-- 7 · ficha -->
+        <div class="step" data-step="7" hidden>
+          <h2>Seu orçamento está pronto</h2>
+          <p class="lead">Este é o resumo que o estúdio recebe. Envie pelo WhatsApp e anexe o resumo e a sua referência na conversa.</p>
+          <div id="fichaSlot"></div>
+          <div class="estimate" id="estimate"></div>
+          <div class="row" id="shareRow" hidden><button class="btn btn-wa btn-big" type="button" id="shareBtn">Enviar resumo e referência no WhatsApp</button></div>
+          <div class="row">
+            <a class="btn btn-wa" id="waBtn" href="https://wa.me/" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.9 9.9 0 1 1 12 21.8zm8.4-18.3A11.8 11.8 0 0 0 .2 11.9c0 2.1.5 4.1 1.6 5.9L.1 24l6.3-1.7a11.9 11.9 0 0 0 5.7 1.4c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.5-8.4z"/></svg>
+              Enviar pelo WhatsApp
+            </a>
+            <button class="btn" type="button" id="saveFicha">Salvar resumo (imagem)</button>
+          </div>
+          <p class="fine" id="waHint">O WhatsApp abre com a mensagem pronta. Depois é só anexar o resumo salvo.</p>
+          <div class="row" id="refBtns"></div>
+          <div class="row">
+            <button class="btn btn-ghost" type="button" id="copyMsg">Copiar mensagem</button>
+
+          </div>
+          <h3>Como chega para o tatuador</h3>
+          <div class="wa-phone" aria-label="Prévia da conversa no WhatsApp">
+            <div class="wa-head"><i id="waInit">T</i><div><span id="waName">seu tatuador</span><small>online</small></div></div>
+            <div class="bubble" id="bubble"></div>
+            <div class="bubble img" id="bubbleSlot"><time>agora</time></div>
+          </div>
+          <div class="row"><button class="btn btn-ghost" type="button" id="restartBtn">Fazer outro orçamento</button></div>
+        </div>
+
+      </div>
+      <div class="panel-nav" id="panelNav">
+        <button class="btn btn-ghost" type="button" id="backBtn">Voltar</button>
+        <button class="btn btn-gold" type="button" id="nextBtn">Avançar</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<dialog class="cfg" id="cfgDlg" aria-labelledby="cfgTitle">
+  <form method="dialog" id="cfgForm">
+    <h2 id="cfgTitle">Configurar estúdio</h2>
+    <p class="fine">O cliente não vê esta tela. Os valores ficam salvos só neste navegador.</p>
+    <div class="grid2">
+      <label>Nome do estúdio<input class="txt-in" id="cfgStudio" autocomplete="off"></label>
+      <label>Nome do tatuador<input class="txt-in" id="cfgArtist" autocomplete="off"></label>
+    </div>
+    <label>WhatsApp do estúdio (DDI + DDD + número)<input class="txt-in" id="cfgWa" inputmode="numeric" placeholder="5511999999999" autocomplete="off"></label>
+    <div class="grid2">
+      <label>Valor mínimo (R$)<input class="txt-in" id="cfgMin" type="number" min="0" step="10"></label>
+      <label>R$ por cm² · preto e cinza<input class="txt-in" id="cfgRp" type="number" min="0" step="0.1"></label>
+      <label>R$ por cm² · colorida<input class="txt-in" id="cfgRc" type="number" min="0" step="0.1"></label>
+      <label>cm² por sessão<input class="txt-in" id="cfgSess" type="number" min="20" step="10"></label>
+    </div>
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn btn-ghost" value="cancel" type="submit">Fechar</button>
+      <button class="btn btn-gold" value="save" type="submit" id="cfgSave">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
+<script type="module">
+import { Stage } from './js/stage3d.js';
+(function(){
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const svgI=d=>`<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const IC={check:svgI('<path d="M20 6 9 17l-5-5"/>'),x:svgI('<path d="M18 6 6 18M6 6l12 12"/>'),star:svgI('<circle cx="12" cy="8" r="6"/><path d="M15.5 12.9 17 22l-5-3-5 3 1.5-9.1"/>'),
+  up:svgI('<path d="M12 19V5M5 12l7-7 7 7"/>'),alert:svgI('<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>'),arrow:svgI('<path d="M5 12h14M12 5l7 7-7 7"/>'),down:svgI('<path d="M12 5v14M19 12l-7 7-7-7"/>')};
+const GLYPH={'★':'star','▲':'up','!':'alert','→':'arrow','✓':'check','↓':'down'};
+const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const f=v=>Math.round(v*10)/10, P=p=>`${f(p[0])} ${f(p[1])}`;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------------- configuração do estúdio ---------------- */
+const CFG_DEF={studio:'Fernando Dias Tatuagem',artist:'Fernando',wa:'',min:250,rp:3.2,rc:4.4,sess:150};
+let CFG={...CFG_DEF};
+try{const s=JSON.parse(localStorage.getItem('fdt-orcamento-cfg')||'null'); if(s) CFG={...CFG_DEF,...s};}catch(e){}
+
+/* ---------------- estado ---------------- */
+const SKINS=[{c:'#f4d6c2',n:'I'},{c:'#e8bb97',n:'II'},{c:'#d09a72',n:'III'},{c:'#a8704a',n:'IV'},{c:'#7a4a2d',n:'V'},{c:'#4d2e1c',n:'VI'}];
+const BUILDS=['Magro','Atlético','Médio','Robusto'];
+const HAIRS=['Raspado','Curto','Longo','Cacheado'];
+const HAIRC=[{c:'#1c1512',n:'Preto'},{c:'#4a2f1f',n:'Castanho'},{c:'#c99b55',n:'Loiro'},{c:'#9c4122',n:'Ruivo'},{c:'#7b5cff',n:'Roxo'},{c:'#cfcbe0',n:'Grisalho'}];
+const STEPS=['Início','Corpo','Medidas','Local','Referência','Tamanho','Detalhes','Resumo'];
+const CORPO={A:'Homem',B:'Mulher'};
+const ACH={corpo:'Corpo escolhido',fenotipo:'Medidas salvas',local:'Locais marcados',stencil:'Estêncil pronto',encaixe:'Tamanho definido',quest:'Detalhes salvos',final:'Orçamento pronto'};
+const S={hit:{},step:0,maxStep:0,corpo:null,build:2,skin:2,hair:1,hairC:1,altura:170,view:'front',zones:[],art:{},artSel:null,fitSel:null,ans:{},xp:0,ach:new Set(),qxp:new Set()};
+
+/* ---------------- locais do corpo ---------------- */
+// cada local: parte do manequim 3D, frente ou costas, largura inicial da arte (cm) e um alvo para a escolha pela lista
+const Yc=y=>(593-y)*0.2977;
+const ZDEF=[];
+(()=>{
+  const add=(id,label,view,part,o={})=>ZDEF.push({id,label,view,part,...o});
+  const SIDES=[['dir','direito','direita',-1],['esq','esquerdo','esquerda',1]];
+  add('front-pescoco','Pescoço','front','neck',{w:5});
+  add('front-peito','Peito','front','torso',{y:127,x:0,w:16});
+  add('front-abdomen','Abdômen','front','torso',{y:101,x:0,w:13});
+  for(const [s,,fe,sx] of SIDES)add(`front-costela-${s}`,`Costela ${fe}`,'front','torso',{y:111,x:sx*12,w:9});
+  add('back-nuca','Nuca','back','neck',{w:5});
+  add('back-costas','Costas (parte de cima)','back','torso',{y:128,x:0,w:20});
+  add('back-lombar','Lombar','back','torso',{y:99,x:0,w:15});
+  add('back-coluna','Coluna','back','torso',{y:114,x:0,w:4.5});
+  for(const [s,m,fe] of SIDES){
+    add(`front-ombro-${s}`,`Ombro ${m}`,'front','upper_'+s,{w:7,yFrac:.9});
+    add(`back-ombro-tras-${s}`,`Ombro ${m} (trás)`,'back','upper_'+s,{w:7,yFrac:.9});
+    add(`front-braco-${s}`,`Braço ${m}`,'front','upper_'+s,{w:7,yFrac:.45});
+    add(`back-braco-tras-${s}`,`Braço ${m} (trás)`,'back','upper_'+s,{w:7,yFrac:.45});
+    add(`front-antebraco-${s}`,`Antebraço ${m}`,'front','fore_'+s,{w:6});
+    add(`back-antebraco-tras-${s}`,`Antebraço ${m} (trás)`,'back','fore_'+s,{w:6});
+    add(`front-mao-${s}`,`Mão ${fe}`,'front','hand_'+s,{w:4});
+    add(`front-coxa-${s}`,`Coxa ${fe}`,'front','thigh_'+s,{w:11});
+    add(`back-coxa-tras-${s}`,`Coxa ${fe} (trás)`,'back','thigh_'+s,{w:11});
+    add(`front-canela-${s}`,`Canela ${fe}`,'front','calf_'+s,{w:6});
+    add(`back-panturrilha-${s}`,`Panturrilha ${fe}`,'back','calf_'+s,{w:8});
+    add(`front-pe-${s}`,`Pé ${m}`,'front','foot_'+s,{w:5});
+  }
+})();
+const ZMAP=Object.fromEntries(ZDEF.map(z=>[z.id,z]));
+function classify(h){
+  const [x,y]=h.p,front=h.n[2]>=0,part=h.part;
+  if(!part||part==='head'||part==='hair')return null;
+  if(part==='neck')return front?'front-pescoco':'back-nuca';
+  if(part==='torso'){
+    if(front){if(y>117)return 'front-peito';if(Math.abs(x)>10&&y>100)return `front-costela-${x<0?'dir':'esq'}`;return 'front-abdomen';}
+    if(Math.abs(x)<2.6)return 'back-coluna';return y>110?'back-costas':'back-lombar';
+  }
+  const [kind,side]=part.split('_');
+  if(kind==='upper'){const bb=stage&&stage.partBox(part);if(bb&&y>bb.max.y-(bb.max.y-bb.min.y)*.22)return `${front?'front-ombro':'back-ombro-tras'}-${side}`;}
+  if(kind==='hand')return `front-mao-${side}`;if(kind==='foot')return `front-pe-${side}`;
+  const M={shoulder:['ombro','ombro-tras'],upper:['braco','braco-tras'],fore:['antebraco','antebraco-tras'],thigh:['coxa','coxa-tras'],calf:['canela','panturrilha']}[kind];
+  if(!M)return null;
+  return `${front?'front':'back'}-${front?M[0]:M[1]}-${side}`;
+}
+
+/* ---------------- palco 3D ---------------- */
+let stage=null;
+try{stage=new Stage($('#gl'));stage.load('./models/').then(()=>{$('#glLoad').classList.add('done');setTimeout(()=>$('#glLoad').hidden=true,450);THUMBS.clear();renderAvatar();home();if(S.step===1)renderCorpo();if(S.step===2)renderFenotipo();}).catch(e=>{console.error(e);$('#glLoad').hidden=true;$('#glFail').hidden=false;});}catch(e){console.error(e);$('#glFail').hidden=false;}
+function anchorFor(id){const z=ZMAP[id];return stage?stage.anchor(z.part,z.y,z.x,z.view==='back',z.yFrac):null;}
+function bodyParams(){return {corpo:S.corpo||'A',build:S.build,skin:S.skin,skinColor:SKINS[S.skin].c,altura:S.altura,hair:S.corpo?S.hair:0,hairColor:HAIRC[S.hairC].c,holo:!S.corpo};}
+function artCanvas(a){return a.mode==='color'?a.art.cv.colorA:(a.mode==='lines'?a.art.cv.lines:a.art.cv.shade);}
+function renderAvatar(){
+  $$('#viewSeg button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===S.view)));
+  if(stage){
+    stage.setBody(bodyParams());
+    for(const id of [...stage.decals.keys()])if(!S.zones.includes(id)||!S.art[id]||!S.art[id].place)stage.removeDecal(id);
+    for(const id of S.zones){const a=S.art[id];if(!a||!a.place)continue;const pl=a.place,cv=artCanvas(a);
+      const sig=[cv.__k||'',pl.p.join(),pl.n.join(),pl.w,pl.rot,pl.flip,a.mode].join('|');const d=stage.decals.get(id);
+      if(d&&d.sig===sig&&cv.__k)continue;
+      stage.setDecal(id,{part:ZMAP[id].part,canvas:cv,ratio:a.art.ratio,p:pl.p,n:pl.n,w:pl.w,rot:pl.rot,flip:pl.flip,sig});
+      stage.decals.get(id).sig=[cv.__k,pl.p.join(),pl.n.join(),pl.w,pl.rot,pl.flip,a.mode].join('|');}
+    const pins=[];
+    if(S.step===3||S.step===5)S.zones.forEach((id,i)=>{const h=S.hit[id];if(!h)return;if(S.step===5&&id===S.fitSel)return;const pl=S.step===5&&S.art[id]?.place;pins.push({num:i+1,p:pl?pl.p:h.p,n:pl?pl.n:h.n});});
+    stage.setPins(pins);
+  }
+  updateReadout();
+}
+function home(){if(stage)stage.home();}
+function flipView(v){if(v===S.view)return;S.view=v;if(stage){stage.setView(v,true);stage.home();}renderAvatar();}
+
+/* ---------------- HUD, XP e conquistas ---------------- */
+function updateHUD(){
+  const ph=$('#phases');
+  ph.innerHTML=STEPS.slice(1).map((n,i)=>{const k=i+1,cls=k===S.step?'now':(k<=S.maxStep&&k<S.step?'done':(k<=S.maxStep?'done':''));
+    return `<button type="button" class="ph ${cls}" data-go="${k}" ${k>S.maxStep?'disabled':''} ${k===S.step?'aria-current="step"':''}><i>${k}</i>${n}</button>`;}).join('');
+  const pct=Math.round(Math.min(7,S.step)/7*100);
+  $('#xpFill').style.width=pct+'%';$('#xpBar').setAttribute('aria-valuenow',pct);
+  $('#lvlNum').textContent=S.step===7?'pronto para enviar':`${pct}% completo`;
+  const now=ph.querySelector('.now');if(now&&now.scrollIntoView)now.scrollIntoView({block:'nearest',inline:'center'});
+}
+function award(k){
+  if(S.ach.has(k)||!ACH[k])return;S.ach.add(k);
+  toast('Etapa concluída',ACH[k],'✓','info');
+}
+function smallXP(){}
+function toast(small,big,icon,kind){
+  const t=document.createElement('div');t.className='toast'+(kind?' '+kind:'');
+  const sm=String(small).charAt(0)+String(small).slice(1).toLowerCase();
+  t.innerHTML=`<span class="medal">${IC[GLYPH[icon]||'star']}</span><div><small>${esc(sm)}</small><b>${esc(big)}</b></div>`;
+  const box=$('#toasts');while(box.children.length>=2)box.firstElementChild.remove();box.appendChild(t);setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),320);},2600);
+}
+function updateReadout(){
+  const r=$('#readout'),tag=$('#stageTag');
+  const desc=S.corpo?`${CORPO[S.corpo].toLowerCase()} · ${BUILDS[S.build].toLowerCase()} · ${S.altura} cm`:'escolha o corpo';
+  tag.innerHTML=`<span class="tag-v">${S.view==='front'?'Frente':'Costas'}</span>`;
+  let html='';
+  switch(S.step){
+    case 0:html='Arraste para girar · toque em <em>Iniciar orçamento</em>';break;
+    case 1:html=S.corpo?`<em>${CORPO[S.corpo]}</em> selecionado`:'Escolha o corpo no painel';break;
+    case 2:html=`${BUILDS[S.build]} · pele tipo ${SKINS[S.skin].n} · <em>${S.altura} cm</em>`;break;
+    case 3:html=`Toque no corpo para marcar · <em>${S.zones.length}/3</em> locais`;break;
+    case 4:{const z=ZMAP[S.artSel];html=z?`Arte para <em>${esc(z.label)}</em>`:'Envie uma referência';break;}
+    case 5:{const a=S.art[S.fitSel];if(a&&a.place){const w=a.place.w,h=w*a.art.ratio;html=`${esc(ZMAP[S.fitSel].label)} · <em>≈ ${w.toFixed(1).replace('.',',')} × ${h.toFixed(1).replace('.',',')} cm</em>`;}break;}
+    case 6:html='Responda os últimos detalhes';break;
+    case 7:html='<em>Orçamento pronto</em> para enviar';break;
+  }
+  r.innerHTML=html||'&nbsp;';
+}
+
+/* ---------------- navegação entre fases ---------------- */
+function canNext(){
+  switch(S.step){
+    case 1:return S.corpo?null:'Escolha homem ou mulher.';
+    case 3:return S.zones.length?null:'Marque pelo menos um local no corpo.';
+    case 4:{const miss=S.zones.find(id=>!S.art[id]);return miss?`Falta a arte para “${ZMAP[miss].label}”.`:null;}
+    case 6:{const req=['estilo','cor','fidelidade','nome','maior'];const m=req.find(k=>!S.ans[k]||(Array.isArray(S.ans[k])&&!S.ans[k].length));
+      return m?({estilo:'Escolha um estilo.',cor:'Escolha preto e cinza, colorida ou só traço.',fidelidade:'Diga se a arte deve ser igual à referência.',nome:'Coloque seu nome.',maior:'Confirme que tem 18 anos ou mais.'}[m]):null;}
+  }
+  return null;
+}
+function go(n,dir){
+  if(n<0||n>7)return;
+  if(dir>0){const err=canNext();if(err){toast('FALTA POUCO',err,'!','warn');$('#nextBtn').classList.remove('shake');void $('#nextBtn').offsetWidth;$('#nextBtn').classList.add('shake');return;}
+    onLeave(S.step);}
+  S.step=n;S.maxStep=Math.max(S.maxStep,n);
+  $$('.step[data-step]').forEach(el=>el.hidden=+el.dataset.step!==n);
+  const el=$(`.step[data-step="${n}"]`);
+  $('#panelNav').hidden=n===0;
+  $('#backBtn').disabled=n<=1;
+  $('#nextBtn').hidden=n===7;
+  $('#nextBtn').textContent=n===6?'Ver resumo':'Avançar';
+  if(stage)stage.setIdle(n===0);
+  onEnter(n);updateHUD();updateReadout();
+  if(matchMedia('(max-width:860px)').matches){const pb=document.querySelector('.panel');const y=pb.getBoundingClientRect().top+scrollY-($('#stage').offsetHeight)-8;if(scrollY>y)scrollTo({top:Math.max(0,y),behavior:REDUCED?'auto':'smooth'});}
+}
+function onLeave(n){
+  if(n===1)award('corpo');
+  if(n===2)award('fenotipo');
+  if(n===3){award('local');}
+  if(n===5)award('encaixe');
+  if(n===6)award('quest');
+}
+function onEnter(n){
+  if(n<=2){S.view='front';if(stage)stage.setView('front',true);home();}
+  if(n===1)renderCorpo();
+  if(n===2)renderFenotipo();
+  if(n===3){home();renderSel();renderZoneList();renderAvatar();}
+  if(n===4){home();renderAvatar();if(!S.artSel||!S.zones.includes(S.artSel))S.artSel=S.zones.find(id=>!S.art[id])||S.zones[0];renderArt();}
+  if(n===5){for(const id of S.zones)ensurePlace(id);if(!S.fitSel||!S.zones.includes(S.fitSel))S.fitSel=S.zones[0];selectFit(S.fitSel);}
+  if(n===6){home();renderQuests();}
+  if(n===7){home();buildFicha();}
+  if(n!==5&&n!==3&&n!==4&&n!==7)renderAvatar();
+}
+
+/* ---------------- fase 1 e 2 ---------------- */
+const THUMBS=new Map();
+function mini(corpo,build,skin){
+  if(!stage)return '';const k=[corpo,build,skin].join();
+  if(!THUMBS.has(k)){const c=stage.thumb({corpo,build,skin,skinColor:SKINS[skin].c,altura:170,hair:corpo==='A'?1:2,hairColor:HAIRC[1].c,holo:false},240,520);THUMBS.set(k,c.toDataURL('image/png'));}
+  return `<img class="fig" src="${THUMBS.get(k)}" alt="">`;
+}
+function renderCorpo(){
+  $('#corpoPick').innerHTML=['A','B'].map(c=>`<button type="button" class="opt" data-corpo="${c}" aria-pressed="${S.corpo===c}"><span class="tick">${IC.check}</span>${mini(c,S.build,S.skin)}<b>${CORPO[c]}</b></button>`).join('');
+}
+function renderFenotipo(){
+  $('#buildPick').innerHTML=BUILDS.map((n,i)=>`<button type="button" class="opt" data-build="${i}" aria-pressed="${S.build===i}"><span class="tick">${IC.check}</span>${mini(S.corpo||'A',i,S.skin)}<b>${n}</b></button>`).join('');
+  $('#skinPick').innerHTML=SKINS.map((s,i)=>`<button type="button" class="skin" data-skin="${i}" aria-pressed="${S.skin===i}" style="background:${s.c}" aria-label="Pele tipo ${s.n}"><span>${s.n}</span></button>`).join('');
+  $('#altura').value=S.altura;$('#alturaOut').textContent=S.altura+' cm';
+}
+document.addEventListener('click',e=>{
+  const c=e.target.closest('[data-corpo]');if(c){S.corpo=c.dataset.corpo;S.hair=S.corpo==='A'?1:2;S.hairC=1;renderCorpo();renderAvatar();smallXP('corpo-pick',20,c);}
+  const b=e.target.closest('[data-build]');if(b){S.build=+b.dataset.build;renderFenotipo();renderAvatar();smallXP('build',20,b);}
+  const hb=e.target.closest('[data-hair]');if(hb){S.hair=+hb.dataset.hair;renderFenotipo();renderAvatar();smallXP('hair',20,hb);}
+  const hcb=e.target.closest('[data-hairc]');if(hcb){S.hairC=+hcb.dataset.hairc;renderFenotipo();renderAvatar();smallXP('hairc',20,hcb);}
+  const s=e.target.closest('[data-skin]');if(s){S.skin=+s.dataset.skin;renderFenotipo();renderAvatar();smallXP('skin',20,s);}
+  const p=e.target.closest('[data-go]');if(p&&!p.disabled){const k=+p.dataset.go;if(k<S.step)go(k,-1);else if(k>S.step){/* avança fase a fase validando */let ok=true;while(S.step<k&&ok){const cur=S.step;go(S.step+1,1);ok=S.step!==cur;}}}
+});
+$('#altura').addEventListener('input',e=>{S.altura=+e.target.value;$('#alturaOut').textContent=S.altura+' cm';updateReadout();smallXP('altura',20,e.target);});
+
+/* ---------------- fase 3: locais ---------------- */
+let zoomBack=0;
+function toggleZone(id,hit){
+  const i=S.zones.indexOf(id);
+  if(i>=0){S.zones.splice(i,1);delete S.art[id];delete S.hit[id];clearTimeout(zoomBack);home();}
+  else{
+    if(S.zones.length>=3){toast('LIMITE','Máximo de 3 locais por orçamento.','!','warn');return;}
+    S.hit[id]=hit||anchorFor(id);S.zones.push(id);
+    const hh=S.hit[id];if(stage&&hh){clearTimeout(zoomBack);stage.focusLocal(hh.p,hh.n,Math.max(ZMAP[id].w*2.6,24));zoomBack=setTimeout(()=>{if(S.step===3)home();},2200);}
+  }
+  renderAvatar();renderSel();renderZoneList();
+}
+function renderSel(){
+  const el=$('#selList');
+  if(!S.zones.length){el.innerHTML='<div class="empty">Nenhum local marcado ainda. Toque no braço, nas costas, na perna…</div>';return;}
+  el.innerHTML=S.zones.map((id,i)=>{const z=ZMAP[id];return `<div class="sel-item"><span class="num">${i+1}</span><div class="txt"><b>${esc(z.label)}</b><small>${z.view==='front'?'Frente':'Costas'}</small></div><button type="button" data-unzone="${id}" aria-label="Remover ${esc(z.label)}">${IC.x}</button></div>`;}).join('');
+}
+function renderZoneList(){
+  $('#zoneListBody').innerHTML=['front','back'].map(v=>`<h4>${v==='front'?'Frente':'Costas'}</h4><div class="chips">${ZDEF.filter(z=>z.view===v).map(z=>`<button type="button" class="chip sm" data-zone="${z.id}" aria-pressed="${S.zones.includes(z.id)}">${esc(z.label)}</button>`).join('')}</div>`).join('');
+}
+document.addEventListener('click',e=>{
+  const u=e.target.closest('[data-unzone]');if(u)toggleZone(u.dataset.unzone);
+  const z=e.target.closest('[data-zone]');if(z){const id=z.dataset.zone;if(ZMAP[id].view!==S.view)flipView(ZMAP[id].view);setTimeout(()=>toggleZone(id),ZMAP[id].view!==S.view?850:0);}
+});
+$('#viewSeg').addEventListener('click',e=>{const b=e.target.closest('[data-view]');if(b)flipView(b.dataset.view);});
+
+/* ---------------- fase 4: forja do estêncil ---------------- */
+function processArt(img){
+  const max=760,iw=img.naturalWidth||img.width,ih=img.naturalHeight||img.height,sc=Math.min(1,max/Math.max(iw,ih));
+  const w=Math.max(8,Math.round(iw*sc)),h=Math.max(8,Math.round(ih*sc));
+  const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d',{willReadFrequently:true});
+  x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(img,0,0,w,h);
+  const src=x.getImageData(0,0,w,h).data,N=w*h,gray=new Float32Array(N),bl=new Float32Array(N),mag=new Float32Array(N);
+  for(let i=0;i<N;i++){const a=src[i*4+3]/255;gray[i]=(1-a)+a*(0.299*src[i*4]+0.587*src[i*4+1]+0.114*src[i*4+2])/255;}
+  for(let y=0;y<h;y++)for(let X=0;X<w;X++){let s=0,n=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const yy=y+dy,xx=X+dx;if(yy>=0&&yy<h&&xx>=0&&xx<w){s+=gray[yy*w+xx];n++;}}bl[y*w+X]=s/n;}
+  let sum=0,sq=0;
+  for(let y=1;y<h-1;y++)for(let X=1;X<w-1;X++){const i=y*w+X;
+    const gx=-bl[i-w-1]-2*bl[i-1]-bl[i+w-1]+bl[i-w+1]+2*bl[i+1]+bl[i+w+1];
+    const gy=-bl[i-w-1]-2*bl[i-w]-bl[i-w+1]+bl[i+w-1]+2*bl[i+w]+bl[i+w+1];
+    const m=Math.hypot(gx,gy);mag[i]=m;sum+=m;sq+=m*m;}
+  const mean=sum/N,sd=Math.sqrt(Math.max(0,sq/N-mean*mean)),t=Math.max(.09,mean+1.1*sd);
+  const mk=()=>{const cv=document.createElement('canvas');cv.width=w;cv.height=h;return cv;};
+  const L=mk(),Sh=mk(),Pp=mk();
+  const li=L.getContext('2d').createImageData(w,h),si=Sh.getContext('2d').createImageData(w,h),pi=Pp.getContext('2d').createImageData(w,h);
+  for(let i=0;i<N;i++){
+    const la=Math.min(1,Math.max(0,(mag[i]-t)/(t*.7)));
+    const gv=bl[i],sa=gv<.86?Math.ceil(((.86-gv)/.86)*4)/4*.62:0;
+    const k=i*4;
+    li.data[k]=20;li.data[k+1]=16;li.data[k+2]=30;li.data[k+3]=la*255;
+    const ca=Math.max(la,sa);si.data[k]=20;si.data[k+1]=16;si.data[k+2]=30;si.data[k+3]=ca*255;
+    // papel de estêncil: fundo claro com traço roxo
+    const pr=243,pg=240,pb=251,sr=107,sg=77,sb=255,mix=Math.max(la,sa*.35);
+    pi.data[k]=pr+(sr-pr)*mix;pi.data[k+1]=pg+(sg-pg)*mix;pi.data[k+2]=pb+(sb-pb)*mix;pi.data[k+3]=255;
+  }
+  const CA=mk(),cai=CA.getContext('2d').createImageData(w,h);
+  for(let i=0;i<N;i++){const k=i*4,lum=(0.299*src[k]+0.587*src[k+1]+0.114*src[k+2])/255;const a=Math.min(1,Math.max(0,(0.96-lum)/0.22))*(src[k+3]/255);cai.data[k]=src[k];cai.data[k+1]=src[k+1];cai.data[k+2]=src[k+2];cai.data[k+3]=a*255;}
+  CA.getContext('2d').putImageData(cai,0,0);
+  L.getContext('2d').putImageData(li,0,0);Sh.getContext('2d').putImageData(si,0,0);Pp.getContext('2d').putImageData(pi,0,0);
+  return {w,h,ratio:h/w,cv:{lines:L,shade:Sh,color:c,colorA:CA,paper:Pp},url:{lines:L.toDataURL('image/png'),shade:Sh.toDataURL('image/png'),color:c.toDataURL('image/jpeg',.9)}};
+}
+function sampleCanvas(){
+  const c=document.createElement('canvas');c.width=c.height=640;const x=c.getContext('2d');
+  x.fillStyle='#fff';x.fillRect(0,0,640,640);
+  const C=[320,322],R=230,V=k=>[C[0]+R*Math.cos((-90+60*k)*Math.PI/180),C[1]+R*Math.sin((-90+60*k)*Math.PI/180)];
+  const T=k=>[C[0]+R*.52*Math.cos((-90+120*k)*Math.PI/180),C[1]+R*.52*Math.sin((-90+120*k)*Math.PI/180)];
+  const v=[0,1,2,3,4,5].map(V),t=[0,1,2].map(T);
+  const faces=[[[t[0],t[1],v[1]],'#3a2a8f'],[[t[1],t[2],v[3]],'#2b1f70'],[[t[2],t[0],v[5]],'#4b37b0'],
+    [[t[0],v[0],v[1]],'#7d63f0'],[[t[0],v[5],v[0]],'#6a50e0'],[[t[1],v[1],v[2]],'#5b44cf'],[[t[1],v[2],v[3]],'#3d2c96'],[[t[2],v[3],v[4]],'#32257f'],[[t[2],v[4],v[5]],'#5640c4'],[[t[0],t[1],t[2]],'#27c3b3']];
+  for(const [pts,col] of faces){x.beginPath();x.moveTo(...pts[0]);x.lineTo(...pts[1]);x.lineTo(...pts[2]);x.closePath();x.fillStyle=col;x.fill();}
+  x.lineJoin='round';x.lineCap='round';x.strokeStyle='#150f2b';x.lineWidth=9;
+  for(const [pts] of faces){x.beginPath();x.moveTo(...pts[0]);x.lineTo(...pts[1]);x.lineTo(...pts[2]);x.closePath();x.stroke();}
+  x.fillStyle='#150f2b';x.font='bold 74px "Hanken Grotesk", sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText('20',C[0],C[1]+12);
+  x.lineWidth=7;x.beginPath();x.arc(C[0],C[1],282,0,Math.PI*2);x.stroke();
+  x.lineWidth=3;x.beginPath();x.arc(C[0],C[1],298,0,Math.PI*2);x.stroke();
+  const star=(sx,sy,r)=>{x.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4,rr=i%2?r*.28:r;x.lineTo(sx+rr*Math.cos(a),sy+rr*Math.sin(a));}x.closePath();x.fillStyle='#150f2b';x.fill();};
+  star(92,110,26);star(552,96,20);star(560,540,28);star(84,548,18);
+  return c;
+}
+let forgeRun=0;
+function fitRect(cv,w,h){const W=cv.width,H=cv.height,s=Math.min(W/w,H/h)*.9;return [(W-w*s)/2,(H-h*s)/2,w*s,h*s];}
+function sizeForge(){const cv=$('#forge'),r=cv.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);cv.width=Math.max(10,Math.round(r.width*d));cv.height=Math.max(10,Math.round(r.height*d));return cv;}
+function drawMode(slot){
+  const cv=sizeForge(),x=cv.getContext('2d'),a=slot.art;
+  x.fillStyle='#f3f0fb';x.fillRect(0,0,cv.width,cv.height);
+  const [dx,dy,dw,dh]=fitRect(cv,a.w,a.h);
+  x.drawImage(slot.mode==='color'?a.cv.color:(slot.mode==='lines'?a.cv.lines:a.cv.shade),dx,dy,dw,dh);
+  $('#forgeLabel').hidden=false;$('#forgeLabel').textContent=slot.mode==='color'?'Original':(slot.mode==='lines'?'Estêncil · só traço':'Estêncil · traço e sombra');
+}
+function forgeAnim(slot,img,done){
+  const run=++forgeRun,cv=sizeForge(),x=cv.getContext('2d'),a=slot.art,[dx,dy,dw,dh]=fitRect(cv,a.w,a.h);
+  $('#forgeLabel').hidden=false;$('#forgeLabel').textContent='Gerando estêncil…';
+  if(REDUCED){done();return;}
+  const t0=performance.now(),D=2100;
+  const tick=t=>{if(run!==forgeRun)return;
+    const p=Math.min(1,(t-t0)/D),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2,y=dy+e*dh;
+    x.fillStyle='#f3f0fb';x.fillRect(0,0,cv.width,cv.height);
+    x.drawImage(img,dx,dy,dw,dh);
+    x.save();x.beginPath();x.rect(dx,dy,dw,y-dy);x.clip();x.drawImage(a.cv.paper,dx,dy,dw,dh);x.restore();
+    const gr=x.createLinearGradient(0,y-34,0,y);gr.addColorStop(0,'rgba(66,40,196,0)');gr.addColorStop(1,'rgba(66,40,196,.22)');x.fillStyle=gr;x.fillRect(dx,y-34,dw,34);
+    x.fillStyle='#4228c4';x.fillRect(dx-8,y-1.5,dw+16,3);x.fillStyle='#17131f';x.fillRect(dx-14,y-5,6,10);x.fillRect(dx+dw+8,y-5,6,10);
+    if(p<1)requestAnimationFrame(tick);else setTimeout(done,250);
+  };
+  requestAnimationFrame(tick);
+}
+function renderArt(){
+  $('#artSlots').innerHTML=S.zones.map((id,i)=>`<button type="button" class="slot${S.art[id]?' ok':''}" data-artslot="${id}" aria-pressed="${S.artSel===id}"><i>${S.art[id]?IC.check:i+1}</i>${esc(ZMAP[id].label)}</button>`).join('');
+  const slot=S.art[S.artSel];
+  $('#drop').hidden=!!slot;$('#modeField').hidden=!slot;
+  const other=S.zones.find(id=>id!==S.artSel&&S.art[id]);
+  $('#copyArtBtn').hidden=!other||!!slot;
+  $('#pickBtn').textContent=slot?'Trocar imagem':'Enviar imagem';
+  if(slot){$$('#modeSeg button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===slot.mode)));requestAnimationFrame(()=>drawMode(slot));}
+  else{$('#forgeLabel').hidden=true;const cv=sizeForge();cv.getContext('2d').clearRect(0,0,cv.width,cv.height);}
+  updateReadout();
+}
+async function useImage(img,blob,name,ext){
+  const id=S.artSel;if(!id)return;
+  let art;try{art=processArt(img);}catch(err){toast('ERRO','Não consegui ler essa imagem. Tente outra (JPG ou PNG).','!','warn');return;}
+  const slot={art,mode:(S.ans.cor==='Colorida')?'color':'shade',blob,name,ext,place:null};
+  S.art[id]=slot;
+  $('#drop').hidden=true;$('#modeField').hidden=true;
+  forgeAnim(slot,img,()=>{award('stencil');renderArt();
+    const next=S.zones.find(z=>!S.art[z]);if(next&&next!==id){toast('PRÓXIMO LOCAL',ZMAP[next].label,'→','info');}});
+}
+async function handleFile(file){
+  if(!file||!/^image\//.test(file.type)){toast('ARQUIVO','Escolha uma imagem (JPG, PNG, WEBP).','!','warn');return;}
+  const url=URL.createObjectURL(file),img=new Image();img.src=url;
+  try{await img.decode();}catch(e){toast('ERRO','Esse formato não abriu aqui. Tente JPG ou PNG.','!','warn');return;}
+  const ext=(file.type.split('/')[1]||'png').replace('jpeg','jpg');
+  await useImage(img,file,file.name,ext);
+}
+$('#file').addEventListener('change',e=>{handleFile(e.target.files[0]);e.target.value='';});
+$('#pickBtn').addEventListener('click',()=>$('#file').click());
+$('#sampleBtn').addEventListener('click',async()=>{const c=sampleCanvas();const blob=await new Promise(r=>c.toBlob(r,'image/png'));useImage(c,blob,'exemplo-d20.png','png');});
+$('#copyArtBtn').addEventListener('click',()=>{const other=S.zones.find(id=>id!==S.artSel&&S.art[id]);if(!other)return;const o=S.art[other];S.art[S.artSel]={...o,place:null};smallXP('copy-'+S.artSel,10,$('#copyArtBtn'));renderArt();});
+$('#modeSeg').addEventListener('click',e=>{const b=e.target.closest('[data-mode]');const s=S.art[S.artSel];if(!b||!s)return;s.mode=b.dataset.mode;renderArt();smallXP('mode',15,b);});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-artslot]');if(b){S.artSel=b.dataset.artslot;forgeRun++;renderArt();}});
+const drop=$('#forgeBox');
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();$('#drop').classList.add('over');}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();$('#drop').classList.remove('over');}));
+drop.addEventListener('drop',e=>{const f0=e.dataTransfer&&e.dataTransfer.files[0];if(f0&&S.step===4)handleFile(f0);});
+document.addEventListener('paste',e=>{if(S.step!==4)return;const it=[...(e.clipboardData?.items||[])].find(i=>i.type.startsWith('image/'));if(it)handleFile(it.getAsFile());});
+addEventListener('resize',()=>{if(S.step===4){const s=S.art[S.artSel];if(s)drawMode(s);}});
+
+/* ---------------- fase 5: encaixe ---------------- */
+function ensurePlace(id){
+  const a=S.art[id];if(!a||a.place)return;const z=ZMAP[id],h=S.hit[id]||anchorFor(id);if(!h)return;
+  a.place={p:h.p.slice(),n:h.n.slice(),w:z.w,rot:0,flip:false};
+}
+function selectFit(id){
+  S.fitSel=id;const z=ZMAP[id];
+  $('#fitSlots').innerHTML=S.zones.map((zid,i)=>`<button type="button" class="slot ok" data-fitslot="${zid}" aria-pressed="${zid===id}"><i>${i+1}</i>${esc(ZMAP[zid].label)}</button>`).join('');
+  syncFitUI();
+  if(z.view!==S.view){S.view=z.view;if(stage)stage.setView(z.view,true);}
+  renderAvatar();
+  const a=S.art[id];if(stage&&a&&a.place)stage.focusLocal(a.place.p,a.place.n,a.place.w);
+}
+function syncFitUI(){
+  const a=S.art[S.fitSel];if(!a||!a.place)return;
+  const w=a.place.w;$('#sz').value=w.toFixed(1);$('#szOut').textContent=w.toFixed(1).replace('.',',')+' cm';
+  $('#rt').value=Math.round(a.place.rot);$('#rtOut').textContent=Math.round(a.place.rot)+'°';
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-fitslot]');if(b)selectFit(b.dataset.fitslot);});
+let rafR=0;const reRender=()=>{cancelAnimationFrame(rafR);rafR=requestAnimationFrame(()=>{renderAvatar();});};
+$('#sz').addEventListener('input',e=>{const a=S.art[S.fitSel];if(!a)return;a.place.w=+e.target.value;syncFitUI();reRender();smallXP('size',20,e.target);});
+$('#rt').addEventListener('input',e=>{const a=S.art[S.fitSel];if(!a)return;a.place.rot=+e.target.value;syncFitUI();reRender();smallXP('rot',20,e.target);});
+$('#flipBtn').addEventListener('click',e=>{const a=S.art[S.fitSel];if(!a)return;a.place.flip=!a.place.flip;reRender();smallXP('flip',10,e.currentTarget);});
+$('#centerBtn').addEventListener('click',()=>{const a=S.art[S.fitSel];if(!a)return;a.place=null;ensurePlace(S.fitSel);syncFitUI();reRender();if(stage&&a.place)stage.focusLocal(a.place.p,a.place.n,a.place.w);});
+
+/* toque no corpo: marca local (fase 3) ou arrasta a arte sobre a pele (fase 5) */
+const gl=$('#gl');let down=null,dragging=false;
+gl.addEventListener('pointerdown',e=>{
+  down={x:e.clientX,y:e.clientY};
+  if(S.step===5&&stage){const a=S.art[S.fitSel];if(!a||!a.place)return;const h=stage.pick(e.clientX,e.clientY);
+    if(h&&h.part===ZMAP[S.fitSel].part){dragging=true;stage.controls.enabled=false;gl.setPointerCapture(e.pointerId);}}
+});
+gl.addEventListener('pointermove',e=>{
+  if(!dragging||!stage)return;const a=S.art[S.fitSel];const h=stage.pick(e.clientX,e.clientY);
+  if(h&&h.part===ZMAP[S.fitSel].part){a.place.p=h.p;a.place.n=h.n;reRender();smallXP('drag',25,null);}
+});
+gl.addEventListener('pointerup',e=>{
+  if(dragging){dragging=false;if(stage)stage.controls.enabled=true;}
+  else if(down&&S.step===3&&stage&&Math.hypot(e.clientX-down.x,e.clientY-down.y)<7){
+    const cx=e.clientX,cy=e.clientY;
+    requestAnimationFrame(()=>{const h=stage.pick(cx,cy);const id=h&&classify(h);
+      if(id)toggleZone(id,h);else if(h)toast('LOCAL','Rosto e cabeça ficam de fora deste orçamento.','!','info');});
+  }
+  down=null;
+});
+gl.addEventListener('pointercancel',()=>{dragging=false;down=null;if(stage)stage.controls.enabled=true;});
+
+/* ---------------- fase 6: perguntas ---------------- */
+const QUESTS=[
+  {id:'estilo',t:'Qual estilo combina com a ideia?',o:['Anime / geek','Fineline','Realismo','Blackwork','Old school','Aquarela','Pontilhismo','Não sei, o tatuador sugere']},
+  {id:'cor',t:'Preto e cinza ou colorida?',o:['Preto e cinza','Colorida','Só traço (linework)']},
+  {id:'fidelidade',t:'Quão parecida com a referência?',o:['Igual à referência','Inspirada, com o traço do tatuador','Criação do zero'],p:'O tatuador costuma adaptar a referência para a arte ficar exclusiva.'},
+  {id:'pele',t:'Como está a pele no local?',o:['Lisa, sem nada','Tem cicatriz ou estria','Cobrir tatuagem antiga']},
+  {id:'primeira',t:'É sua primeira tatuagem?',o:['Sim','Não']},
+  {id:'quando',t:'Quando você pode tatuar?',dates:true,opt:1,p:'Escolha até 3 dias. O estúdio confirma o horário com você.'},
+  {id:'invest',t:'Quanto pretende investir?',o:['Até R$ 300','R$ 300 a 600','R$ 600 a 1.200','Acima de R$ 1.200','Prefiro ver o orçamento'],opt:1},
+  {id:'nome',t:'Seu nome',text:true}
+];
+function renderQuests(){
+  const html=QUESTS.map(q=>{
+    const v=S.ans[q.id],ok=q.text?!!(S.ans.nome&&S.ans.maior):(Array.isArray(v)?v.length:!!v);
+    if(q.text)return `<div class="quest${ok?' ok':''}" data-quest="${q.id}"><span class="qlabel">${q.t}<span class="st">${ok?`${IC.check} feito`:''}</span></span>
+      <input class="txt-in" id="q-nome" placeholder="Como o tatuador deve te chamar" value="${esc(S.ans.nome||'')}" autocomplete="name">
+      <input class="txt-in" id="q-cidade" placeholder="Cidade (opcional)" value="${esc(S.ans.cidade||'')}">
+      <textarea class="txt-in" id="q-obs" placeholder="Conte a história ou o detalhe da ideia (opcional)">${esc(S.ans.obs||'')}</textarea>
+      <label class="check"><input type="checkbox" id="q-maior" ${S.ans.maior?'checked':''}> Tenho 18 anos ou mais</label></div>`;
+    if(q.dates){const days=[],t0=new Date();t0.setHours(12,0,0,0);
+      for(let k=1;days.length<18;k++){const d=new Date(t0);d.setDate(t0.getDate()+k);if(d.getDay()===0)continue;days.push(d);}
+      const sel=S.ans.quando||[];
+      return `<div class="quest${ok?' ok':''}" data-quest="${q.id}"><span class="qlabel"><span>${q.t} <small>opcional</small></span><span class="st">${ok?`${IC.check} feito`:''}</span></span><p>${q.p}</p>
+        <div class="days" role="group" aria-label="Dias">${days.map(d=>{const iso=d.toISOString().slice(0,10);return `<button type="button" class="day" data-day="${iso}" aria-pressed="${sel.includes(iso)}"><span>${d.toLocaleDateString('pt-BR',{weekday:'short'}).replace('.','')}</span><b>${d.getDate()}</b><span>${d.toLocaleDateString('pt-BR',{month:'short'}).replace('.','')}</span></button>`;}).join('')}</div>
+        <div class="chips" role="group" aria-label="Período">${['Manhã','Tarde','Noite','Qualquer horário'].map(o=>`<button type="button" class="chip sm" data-per="${o}" aria-pressed="${S.ans.periodo===o}">${o}</button>`).join('')}</div></div>`;}
+    return `<div class="quest${ok?' ok':''}" data-quest="${q.id}"><span class="qlabel"><span>${q.t}${q.opt?' <small>opcional</small>':''}</span><span class="st">${ok?`${IC.check} feito`:''}</span></span>${q.p?`<p>${q.p}</p>`:''}
+      <div class="chips" role="group" aria-label="${esc(q.t)}">${q.o.map(o=>`<button type="button" class="chip" data-q="${q.id}" data-v="${esc(o)}" aria-pressed="${Array.isArray(v)?v.includes(o):v===o}">${esc(o)}</button>`).join('')}</div></div>`;
+  }).join('');
+  $('#quests').innerHTML=html;questCount();
+  const nm=$('#q-nome'),mi=$('#q-maior'),ci=$('#q-cidade'),ob=$('#q-obs');
+  const upd=()=>{S.ans.nome=nm.value.trim();S.ans.maior=mi.checked;S.ans.cidade=ci.value.trim();S.ans.obs=ob.value.trim();
+    const box=nm.closest('.quest'),ok=!!(S.ans.nome&&S.ans.maior);box.classList.toggle('ok',ok);box.querySelector('.st').innerHTML=ok?`${IC.check} feito`:'';if(ok)smallXP('q-nome',30,box.querySelector('.st'));questCount();};
+  [nm,mi,ci,ob].forEach(el=>el.addEventListener('input',upd));mi.addEventListener('change',upd);
+}
+function questCount(){
+  const n=QUESTS.filter(q=>q.text?(S.ans.nome&&S.ans.maior):(Array.isArray(S.ans[q.id])?S.ans[q.id].length:S.ans[q.id])).length;
+  $('#qDone').textContent=`${n}/${QUESTS.length}`;$('#qFill').style.width=(n/QUESTS.length*100)+'%';
+}
+const dayLabel=iso=>{const d=new Date(iso+'T12:00:00');return d.toLocaleDateString('pt-BR',{weekday:'short'}).replace('.','')+' '+d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});};
+function quandoText(){const A=S.ans;if(!A.quando||!A.quando.length)return '';return A.quando.slice().sort().map(dayLabel).join(', ')+(A.periodo?' · '+A.periodo.toLowerCase():'');}
+document.addEventListener('click',e=>{
+  const d=e.target.closest('[data-day]'),pe=e.target.closest('[data-per]');
+  if(d||pe){const box=(d||pe).closest('.quest');
+    if(d){let arr=S.ans.quando||[];const v=d.dataset.day;if(arr.includes(v))arr=arr.filter(x=>x!==v);else{if(arr.length>=3){toast('Datas','Escolha até 3 dias.','!','warn');return;}arr=[...arr,v];}S.ans.quando=arr;
+      box.querySelectorAll('[data-day]').forEach(b=>b.setAttribute('aria-pressed',String(arr.includes(b.dataset.day))));}
+    if(pe){S.ans.periodo=S.ans.periodo===pe.dataset.per?'':pe.dataset.per;box.querySelectorAll('[data-per]').forEach(b=>b.setAttribute('aria-pressed',String(S.ans.periodo===b.dataset.per)));}
+    const ok=!!(S.ans.quando&&S.ans.quando.length);box.classList.toggle('ok',ok);box.querySelector('.st').innerHTML=ok?`${IC.check} feito`:'';questCount();return;}
+});
+document.addEventListener('click',e=>{
+  const c=e.target.closest('[data-q]');if(!c)return;const q=QUESTS.find(x=>x.id===c.dataset.q),v=c.dataset.v;
+  if(q.multi){let arr=S.ans[q.id]||[];const solo=['Nada a declarar','Qualquer dia'];
+    if(arr.includes(v))arr=arr.filter(x=>x!==v);else arr=solo.includes(v)?[v]:[...arr.filter(x=>!solo.includes(x)),v];S.ans[q.id]=arr;}
+  else S.ans[q.id]=v;
+  if(q.id==='cor'){for(const id in S.art){S.art[id].mode=v==='Colorida'?'color':(v==='Só traço (linework)'?'lines':'shade');}renderAvatar();}
+  const box=c.closest('.quest');box.querySelectorAll('[data-q]').forEach(b=>b.setAttribute('aria-pressed',String(Array.isArray(S.ans[q.id])?S.ans[q.id].includes(b.dataset.v):S.ans[q.id]===b.dataset.v)));
+  const ok=Array.isArray(S.ans[q.id])?S.ans[q.id].length>0:!!S.ans[q.id];box.classList.toggle('ok',ok);box.querySelector('.st').innerHTML=ok?`${IC.check} feito`:'';
+  if(ok)smallXP('q-'+q.id,30,box.querySelector('.st'));questCount();
+});
+
+/* ---------------- fase 7: ficha, estimativa e envio ---------------- */
+const brl=n=>'R$ '+Math.round(n).toLocaleString('pt-BR');
+function estimate(){
+  let area=0;const per=[];
+  for(const id of S.zones){const a=S.art[id];if(!a||!a.place)continue;const w=a.place.w,h=w*a.art.ratio;per.push({id,w,h});area+=w*h*.6;}
+  const cor=S.ans.cor,est=S.ans.estilo;
+  let rate=cor==='Colorida'?CFG.rc:(cor==='Só traço (linework)'?CFG.rp*.75:CFG.rp);
+  rate*=({'Realismo':1.35,'Pontilhismo':1.2,'Aquarela':1.15}[est]||1);
+  const base=Math.max(CFG.min,area*rate),r50=n=>Math.round(n/50)*50;
+  const sess=Math.max(1,Math.ceil(area/(cor==='Colorida'?CFG.sess*.75:CFG.sess)));
+  return {area,lo:Math.max(CFG.min,r50(base*.85)),hi:r50(base*1.2),sess,per};
+}
+function message(est){
+  const A=S.ans,lines=[];
+  lines.push(`Olá, ${CFG.artist}! Fiz meu orçamento pelo site do ${CFG.studio}.`);
+  lines.push('');
+  lines.push(`*${A.nome||'Cliente'}*${A.cidade?' · '+A.cidade:''}`);
+  lines.push(`Corpo: ${CORPO[S.corpo].toLowerCase()} · ${BUILDS[S.build].toLowerCase()} · pele tipo ${SKINS[S.skin].n} · ${S.altura} cm`);
+  lines.push('');
+  lines.push('*Locais*');
+  est.per.forEach((p,i)=>lines.push(`${i+1}. ${ZMAP[p.id].label}, cerca de ${p.w.toFixed(0)} × ${p.h.toFixed(0)} cm`));
+  lines.push('');
+  lines.push(`Estilo: ${A.estilo||'—'} · ${A.cor||'—'}`);
+  lines.push(`Referência: ${A.fidelidade||'—'}`);
+  if(A.primeira)lines.push(`Primeira tattoo: ${A.primeira.toLowerCase()}`);
+  if(A.pele)lines.push(`Pele no local: ${A.pele}`);
+  if(quandoText())lines.push(`Datas possíveis: ${quandoText()}`);
+  if(A.invest)lines.push(`Investimento: ${A.invest}`);
+  if(A.obs)lines.push(`Ideia: ${A.obs}`);
+  lines.push('');
+  lines.push(`Estimativa do app: ${est.sess} ${est.sess>1?'sessões':'sessão'} · ${brl(est.lo)} a ${brl(est.hi)}`);
+  lines.push('Vou mandar o resumo e a referência aqui na conversa.');
+  return lines.join('\n');
+}
+function wrap(x,text,maxW){const words=String(text).split(' '),out=[];let cur='';for(const w of words){const t=cur?cur+' '+w:w;if(x.measureText(t).width>maxW&&cur){out.push(cur);cur=w;}else cur=t;}if(cur)out.push(cur);return out;}
+async function buildFicha(){
+  const est=estimate();S.est=est;
+  try{await Promise.all([document.fonts.load('32px Ultra'),document.fonts.load('600 20px "Hanken Grotesk"'),document.fonts.load('500 14px "Hanken Grotesk"'),document.fonts.load('500 14px "JetBrains Mono"')]);}catch(e){}
+  const views=['front','back'].filter(v=>S.zones.some(id=>ZMAP[id].view===v));if(!views.length)views.push('front');
+  const snaps={};for(const v of views){const ids=S.zones.filter(id=>ZMAP[id].view===v&&S.art[id]?.place);const sw=views.length>1?540:1080;snaps[v]=stage?{...stage.snapshot(v,sw,1240,ids.map(id=>S.art[id].place.p)),ids,sw}:null;}
+  const c=document.createElement('canvas');c.width=1080;c.height=1350;const x=c.getContext('2d');
+  const INK='#17131f',INK2='#4f4a63',RULE='#dcd9e6',VIO='#4228c4',TIS='#f2cd3a';
+  const FD='Ultra, Georgia, serif',FB='"Hanken Grotesk", Arial, sans-serif',FN='"JetBrains Mono", monospace';
+  x.fillStyle='#ffffff';x.fillRect(0,0,1080,1350);
+  // cabeçalho
+  x.fillStyle=INK2;x.font=`600 17px ${FB}`;x.fillText(`Orçamento · ${CFG.studio}`,48,60);
+  x.textAlign='right';x.font=`500 16px ${FN}`;x.fillText(new Date().toLocaleDateString('pt-BR'),1032,60);x.textAlign='left';
+  x.fillStyle=INK;x.font=`46px ${FD}`;x.fillText((S.ans.nome||'Cliente').slice(0,26),48,114);
+  // campo violeta com o(s) corpo(s)
+  {const bg=x.createRadialGradient(328,300,40,328,420,520);bg.addColorStop(0,'#5136d8');bg.addColorStop(.5,'#4228c4');bg.addColorStop(1,'#341e9e');x.fillStyle=bg;}x.beginPath();x.roundRect?x.roundRect(48,144,560,640,18):x.rect(48,144,560,640);x.fill();
+  const areaW=views.length>1?270:540,startX=views.length>1?58:58;
+  views.forEach((v,i)=>{const sn=snaps[v];if(!sn)return;const h=620,X=startX+i*(areaW+4),Y=150;x.drawImage(sn.canvas,X,Y,areaW,h);
+    x.fillStyle='#ffffff';x.font=`600 15px ${FB}`;x.textAlign='center';x.fillText(v==='front'?'Frente':'Costas',X+areaW/2,Math.min(Y+h+14,772));x.textAlign='left';
+    sn.ids.forEach((id,j)=>{const k=S.zones.indexOf(id),px=X+sn.proj[j][0]*areaW/sn.sw,py=Y+sn.proj[j][1]*h/1240;
+      x.strokeStyle='#ffffff';x.lineWidth=2;x.beginPath();x.moveTo(px+10,py-10);x.lineTo(px+3,py-3);x.stroke();
+      x.fillStyle=TIS;x.beginPath();x.arc(px+22,py-22,14,0,Math.PI*2);x.fill();x.strokeStyle=INK;x.lineWidth=2;x.stroke();
+      x.fillStyle=INK;x.font=`700 14px ${FN}`;x.textAlign='center';x.textBaseline='middle';x.fillText(String(k+1),px+22,py-21);x.textAlign='left';x.textBaseline='alphabetic';});
+  });
+  // dados
+  const A=S.ans,rows=[['Estilo',A.estilo],['Cor',A.cor],['Referência',A.fidelidade],['Pele no local',A.pele],['Datas possíveis',quandoText()],['Investimento',A.invest],['Primeira tattoo',A.primeira],['Corpo',`${CORPO[S.corpo]} · ${BUILDS[S.build].toLowerCase()} · pele tipo ${SKINS[S.skin].n} · ${S.altura} cm`],['Cidade',A.cidade]].filter(r=>r[1]);
+  let y=176;const X0=648,MW=384;
+  for(const [k,v] of rows){x.font=`600 19px ${FB}`;const lines=wrap(x,v,MW);if(y+18+lines.slice(0,2).length*24>870)break;
+    x.fillStyle=INK2;x.font=`500 14px ${FB}`;x.fillText(k,X0,y);y+=23;
+    x.fillStyle=INK;x.font=`600 19px ${FB}`;for(const ln of lines.slice(0,2)){x.fillText(ln,X0,y);y+=24;}
+    y+=9;x.fillStyle=RULE;x.fillRect(X0,y-4,MW,1);y+=18;}
+  const refs=[];const seenR=new Set();for(const id of S.zones){const a=S.art[id];if(a&&!seenR.has(a.art)){seenR.add(a.art);refs.push(a.art);}}
+  if(refs.length){x.fillStyle=INK2;x.font=`500 14px ${FB}`;x.fillText('Referências enviadas',X0,888);
+    refs.slice(0,3).forEach((r,i)=>{const bx=X0+i*112,by=900,bs=100;x.fillStyle='#f7f6fb';x.fillRect(bx,by,bs,bs);const sc=Math.min(bs/r.w,bs/r.h)*.92;
+      x.drawImage(r.cv.color,bx+(bs-r.w*sc)/2,by+(bs-r.h*sc)/2,r.w*sc,r.h*sc);x.strokeStyle=RULE;x.lineWidth=1;x.strokeRect(bx+.5,by+.5,bs-1,bs-1);});}
+  // estimativa
+  x.fillStyle='#fdf4cc';x.fillRect(48,810,560,194);x.fillStyle=INK;x.fillRect(48,810,560,3);
+  x.fillStyle=INK2;x.font=`600 16px ${FB}`;x.fillText('Estimativa pela tabela do estúdio',72,850);
+  x.fillStyle=INK;x.font=`40px ${FD}`;x.fillText(`${brl(est.lo)} a ${brl(est.hi)}`,72,912);
+  x.fillStyle=INK2;x.font=`500 17px ${FN}`;x.fillText(`${est.sess} ${est.sess>1?'sessões':'sessão'} · ${Math.round(est.area)} cm² de arte`,72,962);
+  // locais em close
+  x.fillStyle=INK;x.font=`22px ${FD}`;x.fillText('Locais e tamanhos',48,1062);
+  const cw=(984-2*20)/3;
+  S.zones.forEach((id,k)=>{const z=ZMAP[id],a=S.art[id];if(!a||!a.place)return;const X=48+k*(cw+20),Y=1082,box=176;
+    const cu=stage&&stage.closeup(id,352,352);const bg=x.createLinearGradient(0,Y,0,Y+box);bg.addColorStop(0,'#5136d8');bg.addColorStop(1,'#341e9e');x.fillStyle=bg;x.fillRect(X,Y,box,box);if(cu)x.drawImage(cu,X,Y,box,box);
+    x.fillStyle=TIS;x.beginPath();x.arc(X+box+26,Y+20,14,0,Math.PI*2);x.fill();x.strokeStyle=INK;x.lineWidth=2;x.stroke();
+    x.fillStyle=INK;x.font=`700 14px ${FN}`;x.textAlign='center';x.textBaseline='middle';x.fillText(String(k+1),X+box+26,Y+21);x.textAlign='left';x.textBaseline='alphabetic';
+    x.font=`600 17px ${FB}`;const lab=wrap(x,z.label,cw-box-20);lab.slice(0,3).forEach((ln,i)=>x.fillText(ln,X+box+14,Y+62+i*21));
+    const w=a.place.w,h=w*a.art.ratio;x.fillStyle=VIO;x.font=`500 14px ${FN}`;x.fillText(`${w.toFixed(0)} × ${h.toFixed(0)} cm`,X+box+14,Y+box-6);
+  });
+  x.fillStyle=INK2;x.font=`500 13px ${FB}`;x.fillText('Valores estimados pela tabela do estúdio. O valor final é confirmado pelo tatuador.',48,1318);
+  const blob=await new Promise(r=>c.toBlob(r,'image/png'));S.ficha=blob;
+  const url=URL.createObjectURL(blob);
+  const fi=document.createElement('img');fi.className='ficha-img';fi.alt='Ficha de orçamento gerada';fi.src=url;$('#fichaSlot').replaceChildren(fi);
+  const bi=document.createElement('img');bi.alt='Ficha anexada';bi.src=url;const bs=$('#bubbleSlot');bs.querySelector('img')?.remove();bs.prepend(bi);
+  // texto e botões
+  const msg=message(est);S.msg=msg;$('#bubble').innerHTML=esc(msg)+'<time>agora</time>';
+  $('#estimate').innerHTML=`<b class="price">${brl(est.lo)} a ${brl(est.hi)}</b><span>${est.sess} ${est.sess>1?'sessões':'sessão'}</span><span>${Math.round(est.area)} cm² de arte</span><span>pela tabela do estúdio</span>`;
+  const num=String(CFG.wa||'').replace(/\D/g,'');$('#waBtn').href=`https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+  $('#waName').textContent=CFG.artist;$('#waInit').textContent=(CFG.artist||'T').trim()[0].toUpperCase();
+  const seen=new Set();$('#refBtns').innerHTML=S.zones.map((id,i)=>{const a=S.art[id];if(!a||seen.has(a.blob))return'';seen.add(a.blob);return `<button class="btn" type="button" data-ref="${id}">Salvar referência ${i+1} em alta</button>`;}).join('');
+  let canFiles=false;try{canFiles=!!(navigator.canShare&&navigator.canShare({files:[new File([blob],'ficha.png',{type:'image/png'})]}));}catch(e){}
+  $('#shareRow').hidden=!canFiles;$('#waBtn').classList.toggle('btn-ghost',canFiles);$('#waBtn').classList.toggle('btn-wa',!canFiles);
+  $('#waBtn').lastChild.textContent=canFiles?' Só a mensagem':' Enviar pelo WhatsApp';
+  $('#waHint').textContent=canFiles?'No celular, o botão verde abre o compartilhar: escolha o WhatsApp e o contato do estúdio. Vai tudo junto.':'O WhatsApp abre com a mensagem pronta. Depois é só anexar a ficha salva.';
+  award('final');
+}
+/* salvar arquivos */
+const ALLOWED=['png','jpg','jpeg','webp','gif'];
+async function toAllowed(blob,ext){if(ALLOWED.includes(ext))return{blob,ext};const img=new Image();img.src=URL.createObjectURL(blob);await img.decode();const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;c.getContext('2d').drawImage(img,0,0);return{blob:await new Promise(r=>c.toBlob(r,'image/png')),ext:'png'};}
+async function saveFile(name,blob){
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();toast('ARQUIVO',`${name} salvo`,'↓','info');
+}
+const slug=s=>String(s||'cliente').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'cliente';
+$('#saveFicha').addEventListener('click',()=>{if(S.ficha)saveFile(`ficha-${slug(S.ans.nome)}.png`,S.ficha);});
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-ref]');if(!b)return;const a=S.art[b.dataset.ref];if(!a)return;const {blob,ext}=await toAllowed(a.blob,a.ext);saveFile(`referencia-${slug(ZMAP[b.dataset.ref].label)}.${ext}`,blob);});
+$('#copyMsg').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(S.msg||'');toast('COPIADO','Mensagem copiada. Cole no WhatsApp.','✓','info');}catch(e){const r=document.createRange();r.selectNodeContents($('#bubble'));const sel=getSelection();sel.removeAllRanges();sel.addRange(r);toast('SELECIONADO','Copie a mensagem selecionada.','✓','info');}});
+$('#shareBtn').addEventListener('click',async()=>{try{const files=[new File([S.ficha],`ficha-${slug(S.ans.nome)}.png`,{type:'image/png'})];const seen=new Set();for(const id of S.zones){const a=S.art[id];if(a&&!seen.has(a.blob)){seen.add(a.blob);files.push(new File([a.blob],`referencia.${a.ext}`,{type:a.blob.type||'image/png'}));}}await navigator.share({files,text:S.msg});}catch(e){if(e&&e.name!=='AbortError')toast('NÃO DEU','Use o botão do WhatsApp e anexe a ficha.','!','warn');}});
+$('#restartBtn').addEventListener('click',()=>{if(stage)stage.clearDecals();Object.assign(S,{hit:{},step:0,maxStep:0,corpo:null,build:2,skin:2,hair:1,hairC:1,altura:170,view:'front',zones:[],art:{},artSel:null,fitSel:null,ans:{},xp:0,ach:new Set(),qxp:new Set()});go(0);});
+
+/* ---------------- config do estúdio ---------------- */
+function applyCfg(){$('#studioName').textContent=CFG.studio;$('#studioName2').textContent=CFG.studio;$('#artistName').textContent=CFG.artist;const n=CFG.studio.replace(/\s+tatuagem$/i,'');$('#brandName').textContent=n;$('#studioLine').textContent=n===CFG.studio?'orçamento online':'Tatuagem · orçamento online';document.title=CFG.studio;}
+$('#cfgBtn').addEventListener('click',()=>{$('#cfgStudio').value=CFG.studio;$('#cfgArtist').value=CFG.artist;$('#cfgWa').value=CFG.wa;$('#cfgMin').value=CFG.min;$('#cfgRp').value=CFG.rp;$('#cfgRc').value=CFG.rc;$('#cfgSess').value=CFG.sess;
+  const d=$('#cfgDlg');if(d.showModal)d.showModal();else d.setAttribute('open','');});
+$('#cfgDlg').addEventListener('close',()=>{if($('#cfgDlg').returnValue!=='save')return;
+  CFG={studio:$('#cfgStudio').value.trim()||CFG_DEF.studio,artist:$('#cfgArtist').value.trim()||CFG_DEF.artist,wa:$('#cfgWa').value.replace(/\D/g,''),min:+$('#cfgMin').value||0,rp:+$('#cfgRp').value||CFG_DEF.rp,rc:+$('#cfgRc').value||CFG_DEF.rc,sess:Math.max(20,+$('#cfgSess').value||CFG_DEF.sess)};
+  try{localStorage.setItem('fdt-orcamento-cfg',JSON.stringify(CFG));}catch(e){}
+  applyCfg();toast('ESTÚDIO','Configuração salva.','✓','info');if(S.step===7)buildFicha();});
+
+/* ---------------- botões gerais ---------------- */
+$('#startBtn').addEventListener('click',()=>go(1,1));
+$('#nextBtn').addEventListener('click',()=>go(S.step+1,1));
+$('#backBtn').addEventListener('click',()=>go(S.step-1,-1));
+
+applyCfg();renderAvatar();go(0);
+})();
+</script>
+</body>
+</html>
